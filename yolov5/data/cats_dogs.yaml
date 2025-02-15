@@ -1,0 +1,5 @@
+train: ../../datasets/cats_dogs/images/train
+val: ../../datasets/cats_dogs/images/val
+nc: 2
+names: ["cat", "dog"]
+
