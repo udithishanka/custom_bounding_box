@@ -66,6 +66,7 @@ cd ../..
 # root@6c2e1e5507f8:~/custom_bounding_box/yolov5# 
 
 
+
 # Eval results - with the custom bounding box (lambda_factor = 0.5)
 # Validating runs/train/exp16/weights/best.pt...
 # Fusing layers... 
@@ -75,3 +76,13 @@ cd ../..
 #                    cat       1478        238      0.485      0.927        0.5      0.407
 #                    dog       1478        511       0.48      0.904      0.491      0.354
 # Results saved to runs/train/exp16
+
+
+
+# Eval results - with the custom bounding box (lambda_factor = 1.0)
+# Model summary: 157 layers, 7015519 parameters, 0 gradients, 15.8 GFLOPs
+#                  Class     Images  Instances          P          R      mAP50   mAP50-95: 100%|██████████| 47/47 [00:06<00:00,  7.12it/s]
+#                    all       1478        749      0.416      0.656      0.409      0.263
+#                    cat       1478        238      0.384      0.802      0.436      0.309
+#                    dog       1478        511      0.448      0.511      0.382      0.217
+# Results saved to runs/train/exp17
