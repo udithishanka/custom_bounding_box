@@ -6,12 +6,7 @@ tar -xzf images.tar.gz
 tar -xzf annotations.tar.gz
 cd ../..
 
-# python3 -m venv yolov5-env
-# source yolov5-env/bin/activate
 
-pip install -r requirements.txt
-
-#python preprocess.py
 
 # python train.py --img 640 --batch 16 --epochs 10 --data data/cats_dogs.yaml --weights yolov5s.pt --lambda_factor 0.3
 
