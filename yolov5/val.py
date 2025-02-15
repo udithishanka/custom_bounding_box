@@ -467,6 +467,26 @@ def run(
     return (mp, mr, map50, map, *(loss.cpu() / len(dataloader)).tolist()), maps, t
 
 
+
+from utils.metrics import custom_bbox_similarity
+
+def evaluate_custom_metric(predictions, ground_truths):
+    """
+    Compute the custom similarity metric for evaluation.
+    """
+    scores = []
+    for pred, gt in zip(predictions, ground_truths):
+        score = custom_bbox_similarity(pred, gt)
+        scores.append(score.item())
+
+    return sum(scores) / len(scores)
+
+# # After running validation
+# custom_metric_score = evaluate_custom_metric(pred_boxes, gt_boxes)
+# print(f"Custom Bounding Box Similarity: {custom_metric_score:.4f}")
+
+
+
 def parse_opt():
     """
     Parse command-line options for configuring YOLOv5 model inference.
