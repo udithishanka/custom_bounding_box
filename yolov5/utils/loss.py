@@ -4,7 +4,7 @@
 import torch
 import torch.nn as nn
 
-from utils.metrics import bbox_iou
+from utils.metrics import bbox_iou, custom_bbox_similarity
 from utils.torch_utils import de_parallel
 
 
@@ -157,7 +157,11 @@ class ComputeLoss:
                 pwh = (pwh.sigmoid() * 2) ** 2 * anchors[i]
                 pbox = torch.cat((pxy, pwh), 1)  # predicted box
                 iou = bbox_iou(pbox, tbox[i], CIoU=True).squeeze()  # iou(prediction, target)
-                lbox += (1.0 - iou).mean()  # iou loss
+                
+                custom_similarity = custom_bbox_similarity(pbox, tbox[i])
+                
+                lambda_factor = 0.5
+                lbox += (1.0 - iou).mean() + lambda_factor*(1-custom_similarity)
 
                 # Objectness
                 iou = iou.detach().clamp(0).type(tobj.dtype)

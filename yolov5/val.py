@@ -56,7 +56,7 @@ from utils.general import (
     xywh2xyxy,
     xyxy2xywh,
 )
-from utils.metrics import ConfusionMatrix, ap_per_class, box_iou
+from utils.metrics import ConfusionMatrix, ap_per_class, box_iou, custom_bbox_similarity
 from utils.plots import output_to_target, plot_images, plot_val_study
 from utils.torch_utils import select_device, smart_inference_mode
 
@@ -182,7 +182,6 @@ def process_batch(detections, labels, iouv):
                 matches = matches[np.unique(matches[:, 0], return_index=True)[1]]
             correct[matches[:, 1].astype(int), i] = True
     return torch.tensor(correct, dtype=torch.bool, device=iouv.device)
-
 
 @smart_inference_mode()
 def run(
@@ -466,24 +465,6 @@ def run(
         maps[c] = ap[i]
     return (mp, mr, map50, map, *(loss.cpu() / len(dataloader)).tolist()), maps, t
 
-
-
-from utils.metrics import custom_bbox_similarity
-
-def evaluate_custom_metric(predictions, ground_truths):
-    """
-    Compute the custom similarity metric for evaluation.
-    """
-    scores = []
-    for pred, gt in zip(predictions, ground_truths):
-        score = custom_bbox_similarity(pred, gt)
-        scores.append(score.item())
-
-    return sum(scores) / len(scores)
-
-# # After running validation
-# custom_metric_score = evaluate_custom_metric(pred_boxes, gt_boxes)
-# print(f"Custom Bounding Box Similarity: {custom_metric_score:.4f}")
 
 
 

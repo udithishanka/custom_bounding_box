@@ -382,14 +382,22 @@ def plot_mc_curve(px, py, save_dir=Path("mc_curve.png"), names=(), xlabel="Confi
 
 
 
-def custom_bbox_similarity(box1, box2):
+def custom_bbox_similarity(box1, box2, alpha=0.5, beta=0.3, gamma=0.2, lambda_ca=1.0):
     """
-    Compute custom similarity metric between two bounding boxes.
-    :param box1: (x1, y1, x2, y2) format
-    :param box2: (x1, y1, x2, y2) format
+    Compute a custom similarity metric between two bounding boxes considering:
+    - Intersection over Union (IoU)
+    - Aspect Ratio Similarity (ARS)
+    - Center Alignment (CA)
+    
+    :param box1: (x1, y1, x2, y2) format (Tensor of size [4])
+    :param box2: (x1, y1, x2, y2) format (Tensor of size [4])
+    :param alpha: Weight for IoU
+    :param beta: Weight for Aspect Ratio Similarity (ARS)
+    :param gamma: Weight for Center Alignment (CA)
+    :param lambda_ca: Scale factor for center alignment penalty
     :return: similarity score
     """
-
+    
     # Compute IoU (Intersection over Union)
     x1 = torch.max(box1[0], box2[0])
     y1 = torch.max(box1[1], box2[1])
@@ -404,13 +412,13 @@ def custom_bbox_similarity(box1, box2):
     # Compute Aspect Ratio Similarity (ARS)
     w1, h1 = box1[2] - box1[0], box1[3] - box1[1]
     w2, h2 = box2[2] - box2[0], box2[3] - box2[1]
-    ars = 1 - abs((w1/h1) - (w2/h2)) / (w2/h2 + 1e-6)
+    ars = 1 - torch.abs((w1 / h1) - (w2 / h2)) / (w2 / h2 + 1e-6)
 
     # Compute Center Alignment (CA)
-    center1 = ((box1[0] + box1[2]) / 2, (box1[1] + box1[3]) / 2)
-    center2 = ((box2[0] + box2[2]) / 2, (box2[1] + box2[3]) / 2)
-    ca = torch.exp(-torch.norm(torch.tensor(center1) - torch.tensor(center2), p=2))
+    center1 = torch.tensor([(box1[0] + box1[2]) / 2, (box1[1] + box1[3]) / 2])
+    center2 = torch.tensor([(box2[0] + box2[2]) / 2, (box2[1] + box2[3]) / 2])
+    ca = torch.exp(-lambda_ca * torch.norm(center1 - center2, p=2))
 
     # Custom metric as weighted sum
-    similarity = 0.5 * iou + 0.3 * ars + 0.2 * ca
+    similarity = alpha * iou + beta * ars + gamma * ca
     return similarity
