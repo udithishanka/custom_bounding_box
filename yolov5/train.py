@@ -354,6 +354,7 @@ def train(hyp, opt, device, callbacks):
     scheduler.last_epoch = start_epoch - 1  # do not move
     scaler = torch.cuda.amp.GradScaler(enabled=amp)
     stopper, stop = EarlyStopping(patience=opt.patience), False
+    print("Using lambda factor:", opt.lambda_factor)
     compute_loss = ComputeLoss(model, lambda_factor=opt.lambda_factor)  # init loss class
     callbacks.run("on_train_start")
     LOGGER.info(
