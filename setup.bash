@@ -6,4 +6,4 @@ tar -xzf images.tar.gz
 tar -xzf annotations.tar.gz
 cd ../..
 
-python preprocess.py
+python3 preprocess.py
