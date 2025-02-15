@@ -7,3 +7,5 @@ tar -xzf annotations.tar.gz
 cd ../..
 
 python3 preprocess.py
+
+# python train.py --img 640 --batch 16 --epochs 50 --data data/cats_dogs.yaml --weights yolov5s.pt
