@@ -43,3 +43,14 @@ cd ../..
 #                    cat       1478        238      0.476      0.946      0.529      0.441
 #                    dog       1478        511      0.475      0.922      0.496       0.36
 # Results saved to runs/train/exp13
+
+
+
+# Eval results - with the custom bounding box (lambda_factor = 0.05)
+# Model summary: 157 layers, 7015519 parameters, 0 gradients, 15.8 GFLOPs
+#                  Class     Images  Instances          P          R      mAP50   mAP50-95: 100%|██████████| 47/47 [00:06<00:00,  6.90it/s]
+#                    all       1478        749      0.477      0.944      0.499      0.381
+#                    cat       1478        238      0.468      0.966      0.494      0.408
+#                    dog       1478        511      0.487      0.922      0.503      0.355
+# Results saved to runs/train/exp14
+# root@6c2e1e5507f8:~/custom_bounding_box/yolov5# 
