@@ -4,7 +4,7 @@
 import torch
 import torch.nn as nn
 
-from utils.metrics import bbox_iou #, custom_bbox_similarity
+from utils.metrics import bbox_iou , custom_bbox_similarity
 from utils.torch_utils import de_parallel
 
 
@@ -109,7 +109,7 @@ class ComputeLoss:
     sort_obj_iou = False
 
     # Compute losses
-    def __init__(self, model, autobalance=False):
+    def __init__(self, model, autobalance=False, lambda_factor=0.0):
         """Initializes ComputeLoss with model and autobalance option, autobalances losses if True."""
         device = next(model.parameters()).device  # get model device
         h = model.hyp  # hyperparameters
@@ -135,6 +135,7 @@ class ComputeLoss:
         self.nl = m.nl  # number of layers
         self.anchors = m.anchors
         self.device = device
+        self.lambda_factor = lambda_factor
 
     def __call__(self, p, targets):  # predictions, targets
         """Performs forward pass, calculating class, box, and object loss for given predictions and targets."""
@@ -158,10 +159,9 @@ class ComputeLoss:
                 pbox = torch.cat((pxy, pwh), 1)  # predicted box
                 iou = bbox_iou(pbox, tbox[i], CIoU=True).squeeze()  # iou(prediction, target)
                 
-                # custom_similarity = custom_bbox_similarity(pbox, tbox[i])
+                custom_similarity = custom_bbox_similarity(pbox, tbox[i])
                 
-                # lambda_factor = 0.5
-                lbox += (1.0 - iou).mean() # + lambda_factor*(1-custom_similarity)
+                lbox += (1.0 - iou).mean()  + self.lambda_factor*(1-custom_similarity).mean()
 
                 # Objectness
                 iou = iou.detach().clamp(0).type(tobj.dtype)
