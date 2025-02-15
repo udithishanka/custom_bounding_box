@@ -56,7 +56,7 @@ from utils.general import (
     xywh2xyxy,
     xyxy2xywh,
 )
-from utils.metrics import ConfusionMatrix, ap_per_class, box_iou, custom_bbox_similarity
+from utils.metrics import ConfusionMatrix, ap_per_class, box_iou #, custom_bbox_similarity
 from utils.plots import output_to_target, plot_images, plot_val_study
 from utils.torch_utils import select_device, smart_inference_mode
 
