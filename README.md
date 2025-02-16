@@ -3,29 +3,35 @@
 
 ## Project Setup
 
-1. **Run the 'setup.bash' script**
+1. **Clone the repo**
+```bash
+git clone https://github.com/udithishanka/custom_bounding_box.git
+cd custom_bounding_box
+```
 
+2. **Run the 'setup.bash' script**
+- This bash script will download and extract the Oxford-IIIT Pet Dataset.
 ```bash
     bash setup.bash
 ```
 
-2.  **Use/Create a virtual environment to install the dependancies**
+3.  **Use/Create a virtual environment to install the dependancies**
 ```
 python3 -m venv yolov5-env
 source yolov5-env/bin/activate
 ```
 
-3. **Install the Dependancies**
+4. **Install the Dependancies**
 ```bash
 pip install -r requirements.txt
 ```
 
-4. **Run preprocess.py**
+5. **Run preprocess.py**
 ```bash
 python preprocess.py
 ```
 
-5. **Finetune YOLOv5 with Dataset**
+6. **Finetune YOLOv5 with Dataset**
 Here, I have added a new argument called lambda_factor, if its not provided default value is zero, which means it doesn't take the additional custom_bbox_similarity to the loss function.
 
 ```bash
