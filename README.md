@@ -46,13 +46,15 @@ python train.py --img 640 --batch 16 --epochs 10 --data data/cats_dogs.yaml --we
 ```
 
 8. **Evaluate the Finetuned model with the datset**
-- 'exp6' of this command needs to be replaced with your actual dir, which contains the trained weights of your training.
+- Usually when we run the train.py, it does the validation as well at the end, but if you want have trained weights to validate the performance on the cats and dogs dataset, you can use this command. 
+IMPORTANT -Provide your actual weights path. Path in this command won't work.
 
 ```bash
 python val.py --img 640 --batch 16 --data data/cats_dogs.yaml --weights runs/train/exp6/weights/best.pt
 ```
 
 9. **Detect cats and dogs in an image.
+- Use this command to detect cats and dogs in an image. Provide your image source, could be a dir or a file. 
 ```bash
 python detect.py --weights runs/train/exp8/weights/best.pt --source ../datasets/cats_dogs/images/val/Abyssinian_6.jpg --img 640 --conf 0.25
 ```
