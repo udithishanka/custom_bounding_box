@@ -39,14 +39,14 @@ cd yolov5
 - Run following commands inside the yolov5 dir.
 
 7. **Finetune YOLOv5 with Dataset**
-Here, I have added a new argument called lambda_factor, if its not provided default value is zero, which means it doesn't take the additional custom_bbox_similarity to the loss function.
+- Here, I have added a new argument called lambda_factor, if its not provided default value is zero, which means it doesn't take the additional custom_bbox_similarity to the loss function. loss = (1 - iou) + lambda_factor * (1 - custom_similarity). This is my additional term to the loss function - "+ lambda_factor * (1 - custom_similarity)". By changing the value of lambda_factor, you are changing how much the custom boundry box similarity will affect the loss function.
 
 ```bash
 python train.py --img 640 --batch 16 --epochs 10 --data data/cats_dogs.yaml --weights yolov5s.pt --lambda_factor 0.01
 ```
 
 8. **Evaluate the Finetuned model with the datset**
-'exp6' of this command needs to be replaced with your actual dir, which contains the trained weights of your training.
+- 'exp6' of this command needs to be replaced with your actual dir, which contains the trained weights of your training.
 
 ```bash
 python val.py --img 640 --batch 16 --data data/cats_dogs.yaml --weights runs/train/exp6/weights/best.pt
