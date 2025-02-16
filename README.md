@@ -15,7 +15,7 @@ cd custom_bounding_box
     bash setup.bash
 ```
 
-3.  **Use/Create a virtual environment to install the dependancies**
+3. **Create a virtual environment to install the dependancies**
 ```
 python3 -m venv yolov5-env
 source yolov5-env/bin/activate
@@ -27,6 +27,7 @@ pip install -r requirements.txt
 ```
 
 5. **Run preprocess.py**
+- This script converts Pascal VOC XML annotations to YOLO format, splits the dataset into 80% training and 20% validation, and organizes images and labels into respective folders for YOLO-based training.
 ```bash
 python preprocess.py
 ```
