@@ -51,3 +51,8 @@ python train.py --img 640 --batch 16 --epochs 10 --data data/cats_dogs.yaml --we
 ```bash
 python val.py --img 640 --batch 16 --data data/cats_dogs.yaml --weights runs/train/exp6/weights/best.pt
 ```
+
+9. **Detect cats and dogs in an image.
+```bash
+python detect.py --weights runs/train/exp8/weights/best.pt --source ../datasets/cats_dogs/images/val/Abyssinian_6.jpg --img 640 --conf 0.25
+```
