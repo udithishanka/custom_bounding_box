@@ -61,6 +61,7 @@ for folder in ["train", "val"]:
 
 # Get all image files
 image_files = [f for f in os.listdir(image_dir) if f.endswith(('.jpg', '.png'))]
+random.seed(42)
 random.shuffle(image_files)
 
 # Split into 80% train, 20% val
