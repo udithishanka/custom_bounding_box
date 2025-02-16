@@ -53,7 +53,7 @@ IMPORTANT -Provide your actual weights path. Path in this command won't work.
 python val.py --img 640 --batch 16 --data data/cats_dogs.yaml --weights runs/train/exp6/weights/best.pt
 ```
 
-9. **Detect cats and dogs in an image.
+9. **Detect cats and dogs in an image.**
 - Use this command to detect cats and dogs in an image. Provide your image source, could be a dir or a file. 
 ```bash
 python detect.py --weights runs/train/exp8/weights/best.pt --source ../datasets/cats_dogs/images/val/Abyssinian_6.jpg --img 640 --conf 0.25
